@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+  <title>Waoo - Admin - Usuarios</title>
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="css/templatemo_main.css">
+<!--
+Dashboard Template
+http://www.templatemo.com/preview/templatemo_415_dashboard
+-->
+</head>
+<body>
+  <div id="main-wrapper">
+    <div class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <div class="logo"><h1>Waoo - Admin - Usuarios</h1></div>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+    </div>
+    <div class="template-page-wrapper">
+      <div class="navbar-collapse collapse templatemo-sidebar">
+        <ul class="templatemo-sidebar-menu">
+          <li><a href="index.html"><i class="fa fa-home"></i>Inicio</a></li>
+          <li><a href="data-visualization.html"><i class="fa fa-cubes"></i>Reportes</a></li>
+          <li class="active"><a href="usuarios.html"><i class="fa fa-users"></i>Usuarios</a></li>
+          <li><a href="preferences.html"><i class="fa fa-cog"></i>Configuracion</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#confirmModal"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+        </ul>
+      </div><!--/.navbar-collapse -->
+
+      <div class="templatemo-content-wrapper">
+        <div class="templatemo-content">
+          <ol class="breadcrumb">
+            <li><a href="index.html">Inicio</a></li>
+            <li class="active">Usuarios</li>
+            <li><a href="reports.html">Reportes</a></li>
+          </ol>
+          <h1>Waoo - Admin usuarios</h1>
+
+          <div class="row">
+            <div class="col-md-12">
+              <ul id="tabs" class="nav nav-tabs">
+                <li><a href="#usuarios" data-toggle="tab">Aplicaci&oacute;n</a></li>
+                <li><a href="#crearusuario" data-toggle="tab">Crear</a></li>
+              </ul>
+              <div class="tab-content">
+                <div id="usuarios" class="tab-pane fade in active">
+                  <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered js-listar-usuarios">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Username</th>
+                          <th>Email</th>
+                          <th>Tipo</th>
+                          <th>Edit</th>
+                          <th>Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div id="crearusuario" class="tab-pane fade">
+                  <h2>Crear usuario</h2>
+                  <form class="js-crear-usuario" action="index.html" method="post">
+                    <table>
+                      <tr>
+                        <th>Username</th>
+                        <td><input type="text" name="nickname" value=""></td>
+                      </tr>
+                      <tr>
+                        <th>Email</th>
+                        <td><input type="text" name="email" value=""></td>
+                      </tr>
+                      <tr>
+                        <th>Tipo</th>
+                        <td>
+                          <select class="" name="tipo">
+                            <option value="1">Usuario</option>
+                            <option value="2">Asistente</option>
+                            <option value="3">Admin</option>
+                            <option value="4">Punto recarga</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <input type="button" class="btn btn-primary" value="Enviar">
+                        </td>
+                      </tr>
+                    </table>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">Are you sure you want to sign out?</h4>
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn btn-primary js-logout">Yes</a>
+              <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="templatemo-footer">
+        <div class="templatemo-copyright">
+          <p>Copyright &copy; 2016 Waoo</p>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/Chart.min.js"></script>
+  <script src="js/md5.min.js"></script>
+  <script src="js/waoo.js"></script>
+  <script src="js/templatemo_script.js"></script>
+  <script>
+    $('#tabs').tab();
+    waoo.listarUsuarios();
+  </script>
+</body>
+</html>

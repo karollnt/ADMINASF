@@ -1,6 +1,6 @@
 /* Credit: http://www.templatemo.com */
-    
-$(document).ready( function() {        
+
+$(document).ready( function() {
 
 	// sidebar menu click
 	$('.templatemo-sidebar-menu li.sub a').click(function(){
@@ -10,5 +10,7 @@ $(document).ready( function() {
 			$(this).parent().addClass('open');
 		}
 	});  // sidebar menu click
+
+  waoo.init();
 
 }); // document.ready
