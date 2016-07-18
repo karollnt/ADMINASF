@@ -7,7 +7,7 @@ var waoo = (function () {
     $body = $('body');
     usuario = window.localStorage.getItem('usuario');
     if(!usuario){
-      //window.location.href = 'sign-in.html';
+      window.location.href = 'sign-in.html';
     }
     $body.on('submit','.js-login-form',login);
     $body.on('submit','.js-crear-usuario',crearUsuario);
