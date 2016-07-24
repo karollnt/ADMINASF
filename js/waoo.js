@@ -1,17 +1,20 @@
 var waoo = (function () {
-  var usuario = '',
+  var usuario = null,
     waooserver = 'http://waoo.herokuapp.com';
   var $body;
 
   function init() {
     $body = $('body');
     usuario = window.localStorage.getItem('usuario');
-    if(!usuario){
-      window.location.href = 'sign-in.html';
-    }
     $body.on('submit','.js-login-form',login);
+    if(usuario==null || usuario=='' || usuario=='null'){
+      if(location.pathname.split("/").slice(-1)[0] != 'sign-in.html')
+        window.location.href = 'sign-in.html';
+    }
     $body.on('submit','.js-crear-usuario',crearUsuario);
+    $body.on('submit','.js-crear-materia',ingresarMateria);
     $body.on('click','.js-logout',logout);
+    $body.on('click','.js-borrar-materia',borrarMateria);
   }
 
   function login(e) {
@@ -54,7 +57,7 @@ var waoo = (function () {
       var html  = '';
       $.each(resp.usuarios,function(i,v){
         html = '<tr>'
-          +'<td>'+i+'</td>'
+          +'<td>'+(i+1)+'</td>'
           +'<td>'+v.nickname+'</td>'
           +'<td>'+v.email+'</td>'
           +'<td>'+v.tipo+'</td>'
@@ -69,7 +72,8 @@ var waoo = (function () {
     });
   }
 
-  function crearUsuario() {
+  function crearUsuario(e) {
+    e.preventDefault();
     var $form = $(".js-crear-usuario");
     var datos = $form.serialize();
     var ajx = $.ajax({
@@ -87,6 +91,69 @@ var waoo = (function () {
     });
   }
 
+  function listarMaterias() {
+    var $tabla = $('.js-listar-materias tbody');
+    $tabla.html('');
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/materias/listarMaterias',
+      dataType: 'json',
+      data: ''
+    });
+    ajx.done(function(resp) {
+      var html  = '';
+      $.each(resp.materias,function(i,v){
+        html = '<tr>'
+          +'<td>'+(i+1)+'</td>'
+          +'<td>'+v.nombre+'</td>'
+          +'<td><a href="#" class="btn btn-default">Edit</a></td>'
+          +'<td><a href="#" class="btn btn-link js-borrar-materia" data-id="'+v.id+'">Delete</a></td>'
+        +'</tr>';
+        $tabla.append(html);
+      });
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
+  function ingresarMateria(e) {
+    e.preventDefault();
+    var $form = $(".js-crear-materia");
+    var datos = $form.serialize();
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/materias/ingresarMateria',
+      dataType: 'json',
+      data: datos
+    });
+    ajx.done(function(resp) {
+      alert(resp.msg);
+      $form[0].reset();
+      listarMaterias();
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
+  function borrarMateria(e) {
+    var id = $(e.currentTarget).data('id');
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/materias/borrarMateria',
+      dataType: 'json',
+      data: {id:id}
+    });
+    ajx.done(function(resp) {
+      alert(resp.msg);
+      listarMaterias();
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
   function logout() {
     usuario = '';
     window.localStorage.setItem('usuario',null);
@@ -95,6 +162,7 @@ var waoo = (function () {
 
   return {
     init: init,
-    listarUsuarios: listarUsuarios
+    listarUsuarios: listarUsuarios,
+    listarMaterias: listarMaterias
   };
 })();
