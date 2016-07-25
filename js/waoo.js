@@ -62,7 +62,7 @@ var waoo = (function () {
           +'<td>'+v.email+'</td>'
           +'<td>'+v.tipo+'</td>'
           +'<td><a href="#" class="btn btn-default">Edit</a></td>'
-          +'<td><a href="#" class="btn btn-link js-borrar-usuario">Delete</a></td>'
+          +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'">Delete</a></td>'
         +'</tr>';
         $tabla.append(html);
       });
