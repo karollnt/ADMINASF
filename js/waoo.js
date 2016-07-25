@@ -13,8 +13,10 @@ var waoo = (function () {
     }
     $body.on('submit','.js-crear-usuario',crearUsuario);
     $body.on('submit','.js-crear-materia',ingresarMateria);
+    $body.on('submit','.js-crear-banco',crearBanco);
     $body.on('click','.js-logout',logout);
     $body.on('click','.js-borrar-materia',borrarMateria);
+    $body.on('click','.js-borrar-banco',borrarBanco);
   }
 
   function login(e) {
@@ -192,6 +194,68 @@ var waoo = (function () {
         +'</tr>';
         $tabla.append(html);
       });
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
+  function listarBancos() {
+    var $tabla = $('.js-listar-usuarios tbody');
+    $tabla.html('');
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/bancos/listaBancos',
+      dataType: 'json',
+      data: {col:'estado',val:1}
+    });
+    ajx.done(function(resp) {
+      var html  = '';
+      $.each(resp.usuarios,function(i,v){
+        html = '<tr>'
+          +'<td>'+(i+1)+'</td>'
+          +'<td>'+v.nombre+'</td>'
+          +'<td><a href="#" class="btn btn-default">Edit</a></td>'
+          +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'">Delete</a></td>'
+        +'</tr>';
+        $tabla.append(html);
+      });
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
+  function crearBanco(e) {
+    e.preventDefault();
+    var $form = $(".js-crear-banco");
+    var datos = $form.serialize();
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/bancos/crearBanco',
+      dataType: 'json',
+      data: datos
+    });
+    ajx.done(function(resp) {
+      alert(resp.msg);
+      $form[0].reset();
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
+  function borrarBanco(e) {
+    var id = $(e.currentTarget).data('id');
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/usuarios/borrarBanco',
+      dataType: 'json',
+      data: {id:id}
+    });
+    ajx.done(function(resp) {
+      alert(resp.msg);
+      listarUsuarios();
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
