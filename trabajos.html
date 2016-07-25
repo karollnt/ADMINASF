@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
-  <title>Waoo - Admin - Materias</title>
+  <title>Waoo - Admin - Trabajos</title>
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width">
@@ -16,7 +16,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
   <div id="main-wrapper">
     <div class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header">
-        <div class="logo"><h1>Waoo - Admin - Materias</h1></div>
+        <div class="logo"><h1>Waoo - Admin - Trabajos</h1></div>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -31,8 +31,8 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
           <li><a href="index.html"><i class="fa fa-home"></i>Inicio</a></li>
           <li><a href="data-visualization.html"><i class="fa fa-cubes"></i>Reportes</a></li>
           <li><a href="usuarios.html"><i class="fa fa-users"></i>Usuarios</a></li>
-          <li class="active"><a href="materias.html"><i class="fa fa-tasks"></i>Materias</a></li>
-          <li><a href="trabajos.html"><i class="fa fa-tasks"></i>Trabajos</a></li>
+          <li><a href="materias.html"><i class="fa fa-tasks"></i>Materias</a></li>
+          <li class="active"><a href="trabajos.html"><i class="fa fa-tasks"></i>Trabajos</a></li>
           <li><a href="preferences.html"><i class="fa fa-cog"></i>Configuracion</a></li>
           <li><a href="#" data-toggle="modal" data-target="#confirmModal"><i class="fa fa-sign-out"></i>Sign Out</a></li>
         </ul>
@@ -42,43 +42,29 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
         <div class="templatemo-content">
           <ol class="breadcrumb">
             <li><a href="index.html">Inicio</a></li>
-            <li class="active">Materias</li>
+            <li class="active">Trabajos</li>
             <li><a href="reports.html">Reportes</a></li>
           </ol>
-          <h1>Waoo - Admin materias</h1>
+          <h1>Waoo - Admin Trabajos</h1>
 
           <div class="row">
             <div class="col-md-12">
               <ul id="tabs" class="nav nav-tabs">
-                <li class="active"><a href="#crearmateria" data-toggle="tab">Crear</a></li>
-                <li><a href="#materias" data-toggle="tab">Listado</a></li>
+                <li class="active"><a href="#aceptados" data-toggle="tab">Aceptados semana</a></li>
+                <!-- <li><a href="#materias" data-toggle="tab">Listado</a></li> -->
               </ul>
               <div class="tab-content">
-                <div id="crearmateria" class="tab-pane fade in active">
-                  <h3 class="margin-bottom-15">Crear materia</h3>
-                  <form class="js-crear-materia" action="" method="post">
-                    <div class="row margin-bottom-15">
-                      <div class="col-md-6">
-                        <label for="nombre" class="control-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" value="">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <input type="submit" class="btn btn-primary" value="Enviar">
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div id="materias" class="tab-pane fade">
+                <div id="aceptados" class="tab-pane fade in active">
+                  <h3 class="margin-bottom-15">Aceptados Semana</h3>
                   <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered js-listar-materias">
+                    <table class="table table-striped table-hover table-bordered js-listar-trabajos-sem">
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Nombre</th>
-                          <th>Edit</th>
-                          <th>Delete</th>
+                          <th>Asistente</th>
+                          <th>Cuenta</th>
+                          <th>Banco</th>
+                          <th>Tokens</th>
                         </tr>
                       </thead>
                       <tbody></tbody>

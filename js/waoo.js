@@ -171,6 +171,33 @@ var waoo = (function () {
     });
   }
 
+  function trabajosRealizadosSemana() {
+    var $tabla = $('.js-listar-trabajos-sem tbody');
+    $tabla.html('');
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/usuarios/trabajosRealizadosSemana',
+      dataType: 'json',
+      data: ''
+    });
+    ajx.done(function(resp) {
+      var html  = '';
+      $.each(resp.trabajos,function(i,v){
+        html = '<tr>'
+          +'<td>'+(i+1)+'</td>'
+          +'<td>'+v.nombreasistente+'</td>'
+          +'<td>'+v.numerocuenta+'</td>'
+          +'<td>'+v.banco+'</td>'
+          +'<td>'+v.tokens+'</td>'
+        +'</tr>';
+        $tabla.append(html);
+      });
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
   function logout() {
     usuario = '';
     window.localStorage.setItem('usuario',null);
