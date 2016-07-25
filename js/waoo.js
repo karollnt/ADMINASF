@@ -201,17 +201,17 @@ var waoo = (function () {
   }
 
   function listarBancos() {
-    var $tabla = $('.js-listar-usuarios tbody');
+    var $tabla = $('.js-listar-bancos tbody');
     $tabla.html('');
     var ajx = $.ajax({
       type: 'post',
       url: waooserver+'/bancos/listaBancos',
       dataType: 'json',
-      data: {col:'estado',val:1}
+      data: ''
     });
     ajx.done(function(resp) {
       var html  = '';
-      $.each(resp.usuarios,function(i,v){
+      $.each(resp.bancos,function(i,v){
         html = '<tr>'
           +'<td>'+(i+1)+'</td>'
           +'<td>'+v.nombre+'</td>'
@@ -271,6 +271,7 @@ var waoo = (function () {
   return {
     init: init,
     listarUsuarios: listarUsuarios,
-    listarMaterias: listarMaterias
+    listarMaterias: listarMaterias,
+    listarBancos: listarBancos
   };
 })();
