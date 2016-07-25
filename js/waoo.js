@@ -49,7 +49,7 @@ var waoo = (function () {
     $tabla.html('');
     var ajx = $.ajax({
       type: 'post',
-      url: waooserver+'/usuarios/buscarUsuarios',
+      url: waooserver+'/usuarios/listarUsuarios',
       dataType: 'json',
       data: {col:'estado',val:1}
     });
@@ -62,7 +62,7 @@ var waoo = (function () {
           +'<td>'+v.email+'</td>'
           +'<td>'+v.tipo+'</td>'
           +'<td><a href="#" class="btn btn-default">Edit</a></td>'
-          +'<td><a href="#" class="btn btn-link">Delete</a></td>'
+          +'<td><a href="#" class="btn btn-link js-borrar-usuario">Delete</a></td>'
         +'</tr>';
         $tabla.append(html);
       });
@@ -85,6 +85,23 @@ var waoo = (function () {
     ajx.done(function(resp) {
       alert(resp.msg);
       $form[0].reset();
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
+  function borrarUsuario(e) {
+    var id = $(e.currentTarget).data('id');
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/usuarios/borrarUsuario',
+      dataType: 'json',
+      data: {id:id}
+    });
+    ajx.done(function(resp) {
+      alert(resp.msg);
+      listarUsuarios();
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
