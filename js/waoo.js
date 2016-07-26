@@ -87,6 +87,7 @@ var waoo = (function () {
     ajx.done(function(resp) {
       alert(resp.msg);
       $form[0].reset();
+      listarUsuarios();
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
@@ -239,6 +240,7 @@ var waoo = (function () {
     ajx.done(function(resp) {
       alert(resp.msg);
       $form[0].reset();
+      listarBancos();
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
@@ -255,7 +257,7 @@ var waoo = (function () {
     });
     ajx.done(function(resp) {
       alert(resp.msg);
-      listarUsuarios();
+      listarBancos();
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
