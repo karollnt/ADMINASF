@@ -7,10 +7,10 @@ var waoo = (function () {
     $body = $('body');
     usuario = window.localStorage.getItem('usuario');
     $body.on('submit','.js-login-form',login);
-    /*if(usuario==null || usuario=='' || usuario=='null'){
+    if(usuario==null || usuario=='' || usuario=='null'){
       if(location.pathname.split("/").slice(-1)[0] != 'sign-in.html')
         window.location.href = 'sign-in.html';
-    }*/
+    }
     $body.on('submit','.js-crear-usuario',crearUsuario);
     $body.on('submit','.js-crear-materia',ingresarMateria);
     $body.on('submit','.js-crear-banco',crearBanco);
