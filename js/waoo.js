@@ -7,16 +7,18 @@ var waoo = (function () {
     $body = $('body');
     usuario = window.localStorage.getItem('usuario');
     $body.on('submit','.js-login-form',login);
-    if(usuario==null || usuario=='' || usuario=='null'){
+    /*if(usuario==null || usuario=='' || usuario=='null'){
       if(location.pathname.split("/").slice(-1)[0] != 'sign-in.html')
         window.location.href = 'sign-in.html';
-    }
+    }*/
     $body.on('submit','.js-crear-usuario',crearUsuario);
     $body.on('submit','.js-crear-materia',ingresarMateria);
     $body.on('submit','.js-crear-banco',crearBanco);
+    $body.on('submit','.js-filtrar-aceptadas',filtrarAceptadas);
     $body.on('click','.js-logout',logout);
     $body.on('click','.js-borrar-materia',borrarMateria);
     $body.on('click','.js-borrar-banco',borrarBanco);
+    $body.on('click','.js-asignar',reasignar);
   }
 
   function login(e) {
@@ -68,6 +70,26 @@ var waoo = (function () {
         +'</tr>';
         $tabla.append(html);
       });
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
+  function datosSelectAsistentes(clase) {
+    var selectAsistentes = '<select class="'+clase+'">';
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/usuarios/listarAsistentes',
+      dataType: 'json',
+      data: {col:'estado',val:1}
+    });
+    ajx.done(function(resp) {
+      $.each(resp.usuarios,function(i,v){
+        selectAsistentes += '<option value="'+v.id+'">'+v.nickname+'</option>';
+      });
+      selectAsistentes += '</select>';
+      $('.js-asistente-container').html(selectAsistentes);
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
@@ -185,16 +207,80 @@ var waoo = (function () {
     });
     ajx.done(function(resp) {
       var html  = '';
-      $.each(resp.trabajos,function(i,v){
-        html = '<tr>'
-          +'<td>'+(i+1)+'</td>'
-          +'<td>'+v.nombreasistente+'</td>'
-          +'<td>'+v.numerocuenta+'</td>'
-          +'<td>'+v.banco+'</td>'
-          +'<td>'+v.tokens+'</td>'
-        +'</tr>';
-        $tabla.append(html);
-      });
+      if(resp.trabajos){
+        $.each(resp.trabajos,function(i,v){
+          html += '<tr>'
+            +'<td>'+(i+1)+'</td>'
+            +'<td>'+v.nombreasistente+'</td>'
+            +'<td>'+v.numerocuenta+'</td>'
+            +'<td>'+v.banco+'</td>'
+            +'<td>'+v.tokens+'</td>'
+          +'</tr>';
+        });
+      }
+      else {
+        html = '<tr><td colspan="5">No hay resultados</td></tr>';
+      }
+      $tabla.append(html);
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
+  function cargarSelectAsistentes() {
+    datosSelectAsistentes('form-control js-asistente');
+  }
+
+  function filtrarAceptadas(e) {
+    if(e) e.preventDefault();
+    var $tabla = $('.js-listar-aceptadas tbody');
+    $tabla.html('');
+    var $form = $(".js-filtrar-aceptadas");
+    var datos = $form.serialize();
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/usuarios/ofertasAceptadasSemana',
+      dataType: 'json',
+      data: datos
+    });
+    ajx.done(function(resp) {
+      var html='', btn='';
+      if(resp.trabajos){
+        $.each(resp.trabajos,function(i,v){
+          btn = '<button class="btn btn-primary form-control js-asignar" data-id="'+v.id+'">Asignar</button>';
+          html += '<tr>'
+            +'<td>'+(i+1)+'</td>'
+            +'<td>'+v.usuario+'</td>'
+            +'<td>'+v.nickname+'</td>'
+            +'<td>'+v.titulo+'</td>'
+            +'<td>'+v.tokens+'</td>'
+            +'<td>'+btn+'</td>'
+          +'</tr>';
+        });
+      }
+      else {
+        html = '<tr><td colspan="5">No hay resultados</td></tr>';
+      }
+      $tabla.append(html);
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
+  function reasignar(e) {
+    if(e) e.preventDefault();
+    var idtrabajo = $(e.currentTarget).data('id');
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/solicitudes/reasignarAsistenteTrabajo',
+      dataType: 'json',
+      data: {idasistente: $('.js-asistente option:selected').val(), idtrabajo: idtrabajo}
+    });
+    ajx.done(function(resp) {
+      alert(resp.msg);
+      filtrarAceptadas();
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
@@ -274,6 +360,9 @@ var waoo = (function () {
     init: init,
     listarUsuarios: listarUsuarios,
     listarMaterias: listarMaterias,
-    listarBancos: listarBancos
+    listarBancos: listarBancos,
+    trabajosRealizadosSemana: trabajosRealizadosSemana,
+    cargarSelectAsistentes: cargarSelectAsistentes,
+    filtrarAceptadas: filtrarAceptadas
   };
 })();

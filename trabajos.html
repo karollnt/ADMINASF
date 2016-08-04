@@ -52,7 +52,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
             <div class="col-md-12">
               <ul id="tabs" class="nav nav-tabs">
                 <li class="active"><a href="#aceptados" data-toggle="tab">Aceptados semana</a></li>
-                <!-- <li><a href="#materias" data-toggle="tab">Listado</a></li> -->
+                <li><a href="#aceptados2" data-toggle="tab">Reasignar</a></li>
               </ul>
               <div class="tab-content">
                 <div id="aceptados" class="tab-pane fade in active">
@@ -66,6 +66,44 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
                           <th>Cuenta</th>
                           <th>Banco</th>
                           <th>Tokens</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div id="aceptados2" class="tab-pane fade">
+                  <div class="margin-bottom-15"></div>
+                  <form action="" method="post" class="js-filtrar-aceptadas">
+                    <div class="row margin-bottom-15">
+                      <div class="col-sm-2 col-xs-6">
+                        <div class="input-group">
+                          <input type="text" name="registros" value="20" class="form-control">
+                          <span class="input-group-btn">
+                            <input type="submit" class="btn btn-primary" value="Enviar">
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="margin-bottom-15">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <label class="form-control">Reasignar a</label>
+                      </div>
+                      <div class="col-sm-3 js-asistente-container"></div>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered js-listar-aceptadas">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Usuario</th>
+                          <th>Asistente</th>
+                          <th>Trabajo</th>
+                          <th>Valor</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody></tbody>
@@ -109,7 +147,9 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
   <script src="js/templatemo_script.js"></script>
   <script>
     $('#tabs').tab();
-    waoo.listarMaterias();
+    waoo.trabajosRealizadosSemana();
+    waoo.cargarSelectAsistentes();
+    waoo.filtrarAceptadas();
   </script>
 </body>
 </html>
