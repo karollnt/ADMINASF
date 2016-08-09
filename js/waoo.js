@@ -59,17 +59,22 @@ var waoo = (function () {
     });
     ajx.done(function(resp) {
       var html  = '';
-      $.each(resp.usuarios,function(i,v){
-        html = '<tr>'
-          +'<td>'+(i+1)+'</td>'
-          +'<td>'+v.nickname+'</td>'
-          +'<td>'+v.email+'</td>'
-          +'<td>'+v.tipo+'</td>'
-          +'<td><a href="#" class="btn btn-default">Edit</a></td>'
-          +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'">Delete</a></td>'
-        +'</tr>';
-        $tabla.append(html);
-      });
+      if(resp.usuarios){
+        $.each(resp.usuarios,function(i,v){
+          html += '<tr>'
+            +'<td>'+(i+1)+'</td>'
+            +'<td>'+v.nickname+'</td>'
+            +'<td>'+v.email+'</td>'
+            +'<td>'+v.tipo+'</td>'
+            +'<td><a href="#" class="btn btn-default">Edit</a></td>'
+            +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
+          +'</tr>';
+        });
+      }
+      else {
+        html = '<tr><td colspan="6">No hay registros</td></tr>';
+      }
+      $tabla.append(html);
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
@@ -144,15 +149,19 @@ var waoo = (function () {
     });
     ajx.done(function(resp) {
       var html  = '';
-      $.each(resp.materias,function(i,v){
-        html = '<tr>'
-          +'<td>'+(i+1)+'</td>'
-          +'<td>'+v.nombre+'</td>'
-          +'<td><a href="#" class="btn btn-default">Edit</a></td>'
-          +'<td><a href="#" class="btn btn-link js-borrar-materia" data-id="'+v.id+'">Delete</a></td>'
-        +'</tr>';
-        $tabla.append(html);
-      });
+      if(resp.materias){
+        $.each(resp.materias,function(i,v){
+          html += '<tr>'
+            +'<td>'+(i+1)+'</td>'
+            +'<td>'+v.nombre+'</td>'
+            +'<td><a href="#" class="btn btn-link js-borrar-materia" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
+          +'</tr>';
+        });
+      }
+      else {
+        html = '<tr><td colspan="3">No hay registros</td></tr>';
+      }
+      $tabla.append(html);
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
@@ -298,15 +307,19 @@ var waoo = (function () {
     });
     ajx.done(function(resp) {
       var html  = '';
-      $.each(resp.bancos,function(i,v){
-        html = '<tr>'
-          +'<td>'+(i+1)+'</td>'
-          +'<td>'+v.nombre+'</td>'
-          +'<td><a href="#" class="btn btn-default">Edit</a></td>'
-          +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'">Delete</a></td>'
-        +'</tr>';
-        $tabla.append(html);
-      });
+      if(resp.bancos){
+        $.each(resp.bancos,function(i,v){
+          html += '<tr>'
+            +'<td>'+(i+1)+'</td>'
+            +'<td>'+v.nombre+'</td>'
+            +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
+          +'</tr>';
+        });
+      }
+      else {
+        html = '<tr><td colspan="3">No hay registros</td></tr>';
+      }
+      $tabla.append(html);
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
@@ -349,6 +362,38 @@ var waoo = (function () {
       alert('Error: ' + e.message);
     });
   }
+  function rankCalificacion() {
+    var $tabla = $('.js-ranking-calificacion tbody');
+    $tabla.html('');
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/usuarios/rankingAsistentesCalificacion',
+      dataType: 'json',
+      data: ''
+    });
+    ajx.done(function(resp) {
+      var html  = '';
+      if (resp.usuarios) {
+        var calificacion = 0;
+        $.each(resp.usuarios,function(i,v){
+          calificacion = parseFloat(v.calificacion).toFixed(2);
+          html += '<tr>'
+            +'<td>'+(i+1)+'</td>'
+            +'<td>'+v.nickname+'</td>'
+            +'<td><span class="stars" title="'+calificacion+'">'+calificacion+'</span></td>'
+          +'</tr>';
+        });
+      }
+      else {
+        html = '<tr><td colspan="4">No hay registros</td></tr>';
+      }
+      $tabla.append(html);
+      if(resp.usuarios) $('.stars').stars();
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
 
   function logout() {
     usuario = '';
@@ -363,6 +408,7 @@ var waoo = (function () {
     listarBancos: listarBancos,
     trabajosRealizadosSemana: trabajosRealizadosSemana,
     cargarSelectAsistentes: cargarSelectAsistentes,
-    filtrarAceptadas: filtrarAceptadas
+    filtrarAceptadas: filtrarAceptadas,
+    rankCalificacion: rankCalificacion
   };
 })();
