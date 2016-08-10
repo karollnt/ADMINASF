@@ -18,6 +18,7 @@ var waoo = (function () {
     $body.on('click','.js-logout',logout);
     $body.on('click','.js-borrar-materia',borrarMateria);
     $body.on('click','.js-borrar-banco',borrarBanco);
+    $body.on('click','.js-borrar-usuario',borrarUsuario);
     $body.on('click','.js-asignar',reasignar);
   }
 
@@ -102,7 +103,7 @@ var waoo = (function () {
   }
 
   function crearUsuario(e) {
-    e.preventDefault();
+    if(e) e.preventDefault();
     var $form = $(".js-crear-usuario");
     var datos = $form.serialize();
     var ajx = $.ajax({
@@ -122,6 +123,7 @@ var waoo = (function () {
   }
 
   function borrarUsuario(e) {
+    if(e) e.preventDefault();
     var id = $(e.currentTarget).data('id');
     var ajx = $.ajax({
       type: 'post',
@@ -169,7 +171,7 @@ var waoo = (function () {
   }
 
   function ingresarMateria(e) {
-    e.preventDefault();
+    if(e) e.preventDefault();
     var $form = $(".js-crear-materia");
     var datos = $form.serialize();
     var ajx = $.ajax({
@@ -189,6 +191,7 @@ var waoo = (function () {
   }
 
   function borrarMateria(e) {
+    if(e) e.preventDefault();
     var id = $(e.currentTarget).data('id');
     var ajx = $.ajax({
       type: 'post',
@@ -327,7 +330,7 @@ var waoo = (function () {
   }
 
   function crearBanco(e) {
-    e.preventDefault();
+    if(e) e.preventDefault();
     var $form = $(".js-crear-banco");
     var datos = $form.serialize();
     var ajx = $.ajax({
@@ -347,6 +350,7 @@ var waoo = (function () {
   }
 
   function borrarBanco(e) {
+    if(e) e.preventDefault();
     var id = $(e.currentTarget).data('id');
     var ajx = $.ajax({
       type: 'post',
