@@ -20,6 +20,7 @@ var waoo = (function () {
     $body.on('click','.js-borrar-banco',borrarBanco);
     $body.on('click','.js-borrar-usuario',borrarUsuario);
     $body.on('click','.js-asignar',reasignar);
+    $body.on('keyup','.js-filter-users',filtrarTabla);
   }
 
   function login(e) {
@@ -65,9 +66,9 @@ var waoo = (function () {
           html += '<tr>'
             +'<td>'+(i+1)+'</td>'
             +'<td>'+v.nickname+'</td>'
+            +'<td>'+v.nombre+'</td>'
             +'<td>'+v.email+'</td>'
             +'<td>'+v.tipo+'</td>'
-            +'<td><a href="#" class="btn btn-default">Edit</a></td>'
             +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
           +'</tr>';
         });
@@ -403,6 +404,19 @@ var waoo = (function () {
     usuario = '';
     window.localStorage.setItem('usuario',null);
     window.location.href = 'sign-in.html';
+  }
+
+  function filtrarTabla(e) {
+    var element = $(e.target);
+    var $searchable = $('.searchable');
+    var rex = new RegExp(element.val(), 'i');
+    if($searchable.length > 0){
+      var filas = $searchable.find('tr');
+      filas.hide();
+      filas.filter(function () {
+        return rex.test($(this).text());
+      }).show();
+    }
   }
 
   return {
