@@ -20,6 +20,7 @@ var waoo = (function () {
     $body.on('click','.js-borrar-banco',borrarBanco);
     $body.on('click','.js-borrar-usuario',borrarUsuario);
     $body.on('click','.js-asignar',reasignar);
+    $body.on('click','.js-aprobar-soporte',aprobarSoporte);
     $body.on('keyup','.js-filter-users',filtrarTabla);
   }
 
@@ -419,6 +420,56 @@ var waoo = (function () {
     }
   }
 
+  function soportesSinAprobar() {
+    var $tabla = $('.js-lista-soportes tbody');
+    $tabla.html('');
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/solicitudes/soportesSinAprobar',
+      dataType: 'json',
+      data: ''
+    });
+    ajx.done(function(resp) {
+      var html  = '';
+      if (resp.msg) {
+        $.each(resp.msg,function(i,v){
+          html += '<tr>'
+            +'<td>'+(i+1)+'</td>'
+            +'<td>'+v.nickname+'</td>'
+            +'<td>'+v.tokens+'</td>'
+            +'<td><a href="'+v.consignacion+'" target="_blank">Ver</a></td>'
+            +'<td><a href="#" class="btn btn-link js-aprobar-soporte" data-id="'+v.id+'"><span class="fa fa-ok"></span></a></td>'
+          +'</tr>';
+        });
+      }
+      else {
+        html = '<tr><td colspan="4">No hay registros</td></tr>';
+      }
+      $tabla.append(html);
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
+  function aprobarSoporte(ev) {
+    var elem = ev.target;
+    var id = elem.dataset.id;
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/solicitudes/aprobarSoporte',
+      dataType: 'json',
+      data: {id:id, fuente:usuario}
+    });
+    ajx.done(function (resp) {
+      alert(resp.msg);
+      soportesSinAprobar();
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  }
+
   return {
     init: init,
     listarUsuarios: listarUsuarios,
@@ -427,6 +478,7 @@ var waoo = (function () {
     trabajosRealizadosSemana: trabajosRealizadosSemana,
     cargarSelectAsistentes: cargarSelectAsistentes,
     filtrarAceptadas: filtrarAceptadas,
-    rankCalificacion: rankCalificacion
+    rankCalificacion: rankCalificacion,
+    soportesSinAprobar: soportesSinAprobar
   };
 })();

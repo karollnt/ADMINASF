@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
-  <title>Waoo - Admin - Bancos</title>
+  <title>Waoo - Admin - Recargas</title>
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width">
@@ -16,7 +16,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
   <div id="main-wrapper">
     <div class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header">
-        <div class="logo"><h1>Waoo - Admin - Bancos</h1></div>
+        <div class="logo"><h1>Waoo - Admin - Recargas</h1></div>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -34,7 +34,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
           <li><a href="materias.html"><i class="fa fa-tasks"></i>Materias</a></li>
           <li class="active"><a href="bancos.html"><i class="fa fa-university"></i>Bancos</a></li>
           <li><a href="trabajos.html"><i class="fa fa-tasks"></i>Trabajos</a></li>
-          <li><a href="recargas.html"><i class="fa fa-money"></i>Recargas</a></li>
+          <li class="active"><a href="bancos.html"><i class="fa fa-money"></i>Recargas</a></li>
           <li><a href="preferences.html"><i class="fa fa-cog"></i>Configuracion</a></li>
           <li><a href="#" data-toggle="modal" data-target="#confirmModal"><i class="fa fa-sign-out"></i>Sign Out</a></li>
         </ul>
@@ -47,13 +47,13 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
             <li class="active">Materias</li>
             <li><a href="reports.html">Reportes</a></li>
           </ol>
-          <h1>Waoo - Admin Bancos</h1>
+          <h1>Waoo - Admin Recargas</h1>
 
           <div class="row">
             <div class="col-md-12">
               <ul id="tabs" class="nav nav-tabs">
-                <li class="active"><a href="#crearmateria" data-toggle="tab">Crear</a></li>
-                <li><a href="#materias" data-toggle="tab">Listado</a></li>
+                <!-- <li class="active"><a href="#crearmateria" data-toggle="tab">Crear</a></li> -->
+                <li class="active"><a href="#recargasEfectivo" data-toggle="tab">Listado</a></li>
               </ul>
               <div class="tab-content">
                 <div id="crearmateria" class="tab-pane fade in active">
@@ -72,14 +72,16 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
                     </div>
                   </form>
                 </div>
-                <div id="materias" class="tab-pane fade">
+                <div id="recargasEfectivo" class="tab-pane fade">
                   <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered js-listar-bancos">
+                    <table class="table table-striped table-hover table-bordered js-lista-soportes">
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Nombre</th>
-                          <th>Eliminar</th>
+                          <th>Usuario</th>
+                          <th>Tokens</th>
+                          <th>Ver</th>
+                          <th>Aprobar</th>
                         </tr>
                       </thead>
                       <tbody></tbody>
@@ -123,7 +125,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
   <script src="js/templatemo_script.js"></script>
   <script>
     $('#tabs').tab();
-    waoo.listarBancos();
+    waoo.soportesSinAprobar();
   </script>
 </body>
 </html>
