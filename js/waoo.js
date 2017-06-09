@@ -432,13 +432,14 @@ var waoo = (function () {
     ajx.done(function(resp) {
       var html  = '';
       if (resp.msg) {
-        $.each(resp.msg,function(i,v){
+        var soportes = JSON.parse(resp.msg);
+        $.each(soportes,function(i,v){
           html += '<tr>'
             +'<td>'+(i+1)+'</td>'
             +'<td>'+v.nickname+'</td>'
             +'<td>'+v.tokens+'</td>'
             +'<td><a href="'+v.consignacion+'" target="_blank">Ver</a></td>'
-            +'<td><a href="#" class="btn btn-link js-aprobar-soporte" data-id="'+v.id+'"><span class="fa fa-ok"></span></a></td>'
+            +'<td><a href="#" class="btn btn-link js-aprobar-soporte" data-id="'+v.id+'"><span class="fa fa-check"></span></a></td>'
           +'</tr>';
         });
       }
@@ -453,7 +454,9 @@ var waoo = (function () {
   }
 
   function aprobarSoporte(ev) {
-    var elem = ev.target;
+    ev.preventDefault();
+    var elem = ev.currentTarget;
+    console.log(elem);
     var id = elem.dataset.id;
     var ajx = $.ajax({
       type: 'post',
