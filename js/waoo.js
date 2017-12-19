@@ -358,7 +358,7 @@ var waoo = (function () {
     var id = $(e.currentTarget).data('id');
     var ajx = $.ajax({
       type: 'post',
-      url: waooserver+'/usuarios/borrarBanco',
+      url: waooserver+'/bancos/borrarBanco',
       dataType: 'json',
       data: {id:id}
     });
