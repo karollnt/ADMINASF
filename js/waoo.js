@@ -319,7 +319,7 @@ var waoo = (function () {
           html += '<tr>'
             +'<td>'+(i+1)+'</td>'
             +'<td>'+v.nombre+'</td>'
-            +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
+            +'<td><a href="#" class="btn btn-link js-borrar-banco" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
           +'</tr>';
         });
       }
