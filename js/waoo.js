@@ -223,12 +223,13 @@ var waoo = (function () {
       var html  = '';
       if(resp.trabajos){
         $.each(resp.trabajos,function(i,v){
-          html += '<tr>'
+          html += '<tr'+(v.numcomprobante.indexOf('PT-') ? ' class="first-work"':'')+'>'
             +'<td>'+(i+1)+'</td>'
             +'<td>'+v.nombreasistente+'</td>'
             +'<td>'+v.numerocuenta+'</td>'
             +'<td>'+v.banco+'</td>'
             +'<td>'+v.tokens+'</td>'
+            +'<td>'+v.numcomprobante+'</td>'
           +'</tr>';
         });
       }
@@ -263,12 +264,13 @@ var waoo = (function () {
       if(resp.trabajos){
         $.each(resp.trabajos,function(i,v){
           btn = '<button class="btn btn-primary form-control js-asignar" data-id="'+v.id+'">Asignar</button>';
-          html += '<tr>'
+          html += '<tr'+(v.numcomprobante.indexOf('PT-') ? ' class="first-work"':'')+'>'
             +'<td>'+(i+1)+'</td>'
             +'<td>'+v.usuario+'</td>'
             +'<td>'+v.nickname+'</td>'
             +'<td>'+v.titulo+'</td>'
             +'<td>'+v.tokens+'</td>'
+            +'<td>'+v.numcomprobante+'</td>'
             +'<td>'+btn+'</td>'
           +'</tr>';
         });
@@ -317,7 +319,7 @@ var waoo = (function () {
           html += '<tr>'
             +'<td>'+(i+1)+'</td>'
             +'<td>'+v.nombre+'</td>'
-            +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
+            +'<td><a href="#" class="btn btn-link js-borrar-banco" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
           +'</tr>';
         });
       }
