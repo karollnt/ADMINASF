@@ -1,6 +1,6 @@
 var waoo = (function () {
   var usuario = null,
-    waooserver = 'workeando.herokuapp.com';
+    waooserver = 'https://workeando-back.herokuapp.com';
   var $body;
 
   function init() {
