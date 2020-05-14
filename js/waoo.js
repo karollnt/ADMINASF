@@ -32,16 +32,26 @@ var waoo = (function () {
       clave = md5(clave);
       var ajx = $.ajax({
         type: 'post',
-        url: waooserver+'/sesiones/loginAdmin',
+        url: waooserver+'/user/login',
         dataType: 'json',
-        data: {nickname:usr,clave:clave}
+        data: {correo:usr, clave:clave}
       });
       ajx.done(function(resp) {
-        if(resp.msg == 'ok'){
-          window.localStorage.setItem('usuario',usr);
-          usuario = usr;
-          document.querySelector('.js-login-form').reset();
-          window.location.href = 'index.html';
+        if(resp.valid){
+          let request = $.ajax({
+            type: 'GET',
+            url: waooserver + '/user/get_user_data',
+            dataType: 'json',
+            data: {id: resp.id}
+          });
+          request.done(function (data) {
+            let userString = JSON.stringify(data);
+            let usr = JSON.parse(userString);
+            window.localStorage.setItem('usuario', usr);
+            usuario = usr;
+            document.querySelector('.js-login-form').reset();
+            window.location.href = 'index.html';
+          });
         }
         else alert(resp.msg);
       })
@@ -56,9 +66,8 @@ var waoo = (function () {
     $tabla.html('');
     var ajx = $.ajax({
       type: 'post',
-      url: waooserver+'/usuarios/listarUsuarios',
-      dataType: 'json',
-      data: {col:'estado',val:1}
+      url: waooserver+'/user/list_users',
+      dataType: 'json'
     });
     ajx.done(function(resp) {
       var html  = '';
@@ -66,10 +75,10 @@ var waoo = (function () {
         $.each(resp.usuarios,function(i,v){
           html += '<tr>'
             +'<td>'+(i+1)+'</td>'
-            +'<td>'+v.nickname+'</td>'
-            +'<td>'+v.nombre+'</td>'
+            +'<td>'+v.identificacion+'</td>'
+            +'<td>'+(v.nombre + ' ' + v.apellido)+'</td>'
             +'<td>'+v.email+'</td>'
-            +'<td>'+v.tipo+'</td>'
+            +'<td>'+v.direccion+'</td>'
             +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
           +'</tr>';
         });
