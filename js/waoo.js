@@ -156,7 +156,7 @@ var waoo = (function () {
     $tabla.html('');
     var ajx = $.ajax({
       type: 'post',
-      url: waooserver+'/materias/listarMaterias',
+      url: waooserver +'/category/get_categories',
       dataType: 'json',
       data: ''
     });
@@ -167,6 +167,9 @@ var waoo = (function () {
           html += '<tr>'
             +'<td>'+(i+1)+'</td>'
             +'<td>'+v.nombre+'</td>'
+            + '<td>' + v.pecio + '</td>'
+            + '<td>' + v.medida + '</td>'
+            + '<td>' + v.tipo + '</td>'
             +'<td><a href="#" class="btn btn-link js-borrar-materia" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
           +'</tr>';
         });
