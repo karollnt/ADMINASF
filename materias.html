@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
-  <title>Tu eco - Admin - Materias</title>
+  <title>Tu eco - Admin - Materiales</title>
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width">
@@ -16,7 +16,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
   <div id="main-wrapper">
     <div class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header">
-        <div class="logo"><h1>Tu eco - Admin - Materias</h1></div>
+        <div class="logo"><h1>Tu eco - Admin - Materiales</h1></div>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -31,7 +31,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
           <li><a href="index.html"><i class="fa fa-home"></i>Inicio</a></li>
           <li><a href="reportes.html"><i class="fa fa-cubes"></i>Reportes</a></li>
           <li><a href="usuarios.html"><i class="fa fa-users"></i>Usuarios</a></li>
-          <li class="active"><a href="materias.html"><i class="fa fa-tasks"></i>Materias</a></li>
+          <li class="active"><a href="materias.html"><i class="fa fa-tasks"></i>Materiales</a></li>
           <li><a href="bancos.html"><i class="fa fa-university"></i>Bancos</a></li>
           <li><a href="trabajos.html"><i class="fa fa-tasks"></i>Trabajos</a></li>
           <li><a href="recargas.html"><i class="fa fa-money"></i>Recargas</a></li>
@@ -44,7 +44,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
         <div class="templatemo-content">
           <ol class="breadcrumb">
             <li><a href="index.html">Inicio</a></li>
-            <li class="active">Materias</li>
+            <li class="active">Materiales</li>
             <li><a href="reports.html">Reportes</a></li>
           </ol>
           <h1>Tu eco - Admin materias</h1>
@@ -57,12 +57,24 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
               </ul>
               <div class="tab-content">
                 <div id="crearmateria" class="tab-pane fade in active">
-                  <h3 class="margin-bottom-15">Crear materia</h3>
+                  <h3 class="margin-bottom-15">Crear Material</h3>
                   <form class="js-crear-materia" action="" method="post">
                     <div class="row margin-bottom-15">
                       <div class="col-md-6">
                         <label for="nombre" class="control-label">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" value="">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="precio" class="control-label">precio</label>
+                        <input type="text" class="form-control" id="precio" name="precio" value="0">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="medida" class="control-label">medida</label>
+                        <select name="id_medida" id="medida" class="form-control"></select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="tipo" class="control-label">tipo</label>
+                        <select name="id_tipo" id="tipo" class="form-control"></select>
                       </div>
                     </div>
                     <div class="row">

@@ -34,7 +34,7 @@ var waoo = (function () {
         type: 'post',
         url: waooserver+'/user/login',
         dataType: 'json',
-        data: {correo:usr, clave:clave}
+        data: {correo:usr, clave:clave, tipo: 4}
       });
       ajx.done(function(resp) {
         if(resp.valid){
@@ -187,7 +187,7 @@ var waoo = (function () {
     var datos = $form.serialize();
     var ajx = $.ajax({
       type: 'post',
-      url: waooserver+'/materias/ingresarMateria',
+      url: waooserver+'/category/create_category',
       dataType: 'json',
       data: datos
     });
