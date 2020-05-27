@@ -517,6 +517,31 @@ var waoo = (function () {
       alert('Error: ' + e.message);
     });
   }
+  
+  const checkEditPhoto = function (ev) {
+    ev.preventDefault();
+    let messageContainer = $('.js-update-photo-message');
+    messageContainer.html('...');
+    const formData = new FormData(ev.target);
+    let request = $.ajax({
+      async: false,
+      cache: false,
+      contentType: false,
+      url: Variables.backendURL + 'user/update_image',
+      method: 'POST',
+      processData: false,
+      data: formData
+    });
+    request.done(function (data) {
+      if (data.valid == true) {
+        location.reload();
+        return;
+      }
+      messageContainer.html('Ocurri&oacute; un problema, intente de nuevo m&aacute;s tarde');
+    }).fail(function () {
+      messageContainer.html('Ocurri&oacute; un problema, intente de nuevo m&aacute;s tarde');
+    });
+  };
 
   return {
     init: init,
