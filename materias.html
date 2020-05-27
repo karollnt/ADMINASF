@@ -47,7 +47,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
             <li class="active">Materiales</li>
             <li><a href="reports.html">Reportes</a></li>
           </ol>
-          <h1>Tu eco - Admin materias</h1>
+          <h1>Tu eco - Admin Productos</h1>
 
           <div class="row">
             <div class="col-md-12">
@@ -77,6 +77,17 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
                         <select name="id_tipo" id="tipo" class="form-control js-types-select"></select>
                       </div>
                     </div>
+                    <form class="js-edit-user-photo-form contactform editform display-none" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="user_id" value="0" class="js-edit-photo-user-id">
+                    <div class="form_row">
+                      <label for="update_photo">Adjuntar archivo</label>
+                      <input type="file" name="image" class="form_input required" id="update_photo">
+                    </div>
+                    <div class="form_row form_row--button">
+                      <button class="btn" type="submit">Actualizar foto</button>
+                    </div>
+                    <p class="js-update-photo-message"></p>
+                  </form>
                     <div class="row">
                       <div class="col-md-6">
                         <input type="submit" class="btn btn-primary" value="Enviar">
