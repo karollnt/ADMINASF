@@ -100,6 +100,17 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
                         <input type="text" class="form-control" id="celular" name="celular" value="">
                       </div>
                     </div>
+                    <form class="js-edit-user-photo-form contactform editform display-none" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="user_id" value="0" class="js-edit-photo-user-id">
+                    <div class="form_row">
+                      <label for="update_photo">Adjuntar archivo</label>
+                      <input type="file" name="image" class="form_input required" id="update_photo">
+                    </div>
+                    <div class="form_row form_row--button">
+                      <button class="btn" type="submit">Actualizar foto</button>
+                    </div>
+                    <p class="js-update-photo-message"></p>
+                  </form>
                     <div class="row">
                       <div class="col-md-6">
                         <input type="submit" class="btn btn-primary" value="Enviar">
