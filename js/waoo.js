@@ -29,7 +29,7 @@ var waoo = (function () {
     var usr = document.querySelector('.js-usuario').value;
     if(usr!=''){
       var clave = document.querySelector('.js-clave').value;
-      clave = md5(clave);
+      // clave = md5(clave);
       var ajx = $.ajax({
         type: 'post',
         url: waooserver+'/user/login',
@@ -71,13 +71,13 @@ var waoo = (function () {
     });
     ajx.done(function(resp) {
       var html  = '';
-      if(resp.usuarios){
-        $.each(resp.usuarios,function(i,v){
+      if(resp.users) {
+        $.each(resp.users,function(i,v){
           html += '<tr>'
             +'<td>'+(i+1)+'</td>'
             +'<td>'+v.identificacion+'</td>'
             +'<td>'+(v.nombre + ' ' + v.apellido)+'</td>'
-            +'<td>'+v.email+'</td>'
+            +'<td>'+v.correo+'</td>'
             +'<td>'+v.direccion+'</td>'
             +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
           +'</tr>';
@@ -151,6 +151,36 @@ var waoo = (function () {
     });
   }
 
+  function listarMedidas() {
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver + '/category/get_measurements',
+      dataType: 'json',
+      data: ''
+    });
+    ajx.done(function (resp) {
+      const html = resp.reduce(function (carry, item) {
+        return carry + '<option value="' + item.id + '">' + item.nombre + '</option>';
+      }, '');
+      $('.js-medidas-select').html(html);
+    });
+  }
+
+  function listarTiposCategoria() {
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver + '/category/get_category_types',
+      dataType: 'json',
+      data: ''
+    });
+    ajx.done(function (resp) {
+      const html = resp.reduce(function (carry, item) {
+        return carry + '<option value="' + item.id + '">' + item.nombre + '</option>';
+      }, '');
+      $('.js-types-select').html(html);
+    });
+  }
+
   function listarMaterias() {
     var $tabla = $('.js-listar-materias tbody');
     $tabla.html('');
@@ -162,12 +192,12 @@ var waoo = (function () {
     });
     ajx.done(function(resp) {
       var html  = '';
-      if(resp.materias){
-        $.each(resp.materias,function(i,v){
+      if(resp.length) {
+        $.each(resp, function(i,v){
           html += '<tr>'
             +'<td>'+(i+1)+'</td>'
             +'<td>'+v.nombre+'</td>'
-            + '<td>' + v.pecio + '</td>'
+            + '<td>' + v.precio + '</td>'
             + '<td>' + v.medida + '</td>'
             + '<td>' + v.tipo + '</td>'
             +'<td><a href="#" class="btn btn-link js-borrar-materia" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
@@ -195,7 +225,8 @@ var waoo = (function () {
       data: datos
     });
     ajx.done(function(resp) {
-      alert(resp.msg);
+      const msg = resp.valid ? 'Categoria creada' : 'No se pudo crear';
+      alert(msg);
       $form[0].reset();
       listarMaterias();
     })
@@ -496,6 +527,8 @@ var waoo = (function () {
     cargarSelectAsistentes: cargarSelectAsistentes,
     filtrarAceptadas: filtrarAceptadas,
     rankCalificacion: rankCalificacion,
-    soportesSinAprobar: soportesSinAprobar
+    soportesSinAprobar: soportesSinAprobar,
+    listarMedidas: listarMedidas,
+    listarTiposCategoria: listarTiposCategoria
   };
 })();
