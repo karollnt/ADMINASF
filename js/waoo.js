@@ -2,6 +2,7 @@ var waoo = (function () {
   var usuario = null,
     waooserver = 'https://tu-eco-back.herokuapp.com';
   var $body;
+  let recicladores = [];
 
   function init() {
     $body = $('body');
@@ -15,6 +16,8 @@ var waoo = (function () {
     $body.on('submit','.js-crear-materia',ingresarMateria);
     $body.on('submit','.js-crear-banco',crearBanco);
     $body.on('submit','.js-filtrar-aceptadas',filtrarAceptadas);
+    $body.on('submit', '.js-assign-to', asignarRuta);
+    $body.on('submit', '.js-crear-ruta', crearRuta);
     $body.on('click','.js-logout',logout);
     $body.on('click','.js-borrar-materia',borrarMateria);
     $body.on('click','.js-borrar-banco',borrarBanco);
@@ -549,6 +552,131 @@ var waoo = (function () {
     });
   };
 
+  const listarSolicitudesSinAsignar = function () {
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver + '/order/get_unassigned_orders',
+      dataType: 'json',
+      data: ''
+    });
+    ajx.done(function (resp) {
+      var html = '';
+      if (resp.length) {
+        $.each(resp, function (i, solicitud) {
+          html += '<li>' +
+            '<input type="checkbox" name="solicitudes[]" value="' + solicitud.id + '"> ' +
+            '<label for="sol_' + solicitud.id + '">' + solicitud.direccion + '</label> - ' +
+            '<span>' + solicitud.ciudad + ', ' + solicitud.departamento + ' ( creado: ' + solicitud.fecha + ' )</span>' +
+          '</li>';
+        });
+      }
+      else {
+        html = '<tr><td colspan="3">No hay registros</td></tr>';
+      }
+      $('.js-solicitudes').html(html);
+    })
+      .fail(function (e) {
+        alert('Error: ' + e.message);
+      });
+  };
+
+  const listarRutas = function () {
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver + '/route/get_all_routes',
+      dataType: 'json',
+      data: ''
+    });
+    ajx.done(function (resp) {
+      var html = '';
+      if (resp.routes) {
+        if (recicladores.length < 1) {
+          listarRutas();
+          return;
+        }
+        const recicladoresOptions = generarSelectRecicladores();
+        $.each(resp.routes, function (i, ruta) {
+          let assignTo = ruta.nombre + ' ' + ruta.apellido;
+          if (['Recogido', 'Asignado'].indexOf(ruta.estado) < 0) {
+            assignTo = '<form class="js-assign-to">' +
+              '<input type="hidden" name="idruta" value="' + ruta.id + '">' +
+              '<select name="idreciclador">' + recicladoresOptions + '</select><br>' +
+              '<button>Asignar</button>' +
+            '</form>';
+          };
+          html += '<tr>' +
+              '<td>' + ruta.id + '</td>' +
+              '<td>' + ruta.fecha_creacion + '</td>' +
+              '<td>' + ruta.comentario + '</td>' +
+              '<td>' + ruta.estado + '</td>' +
+              '<td>' + assignTo + '</td>' +
+            '</tr>';
+        });
+      }
+      else {
+        html = '<tr><td colspan="5">No hay registros</td></tr>';
+      }
+      $('.js-listar-rutas').append(html);
+    })
+      .fail(function (e) {
+        alert('Error: ' + e.message);
+      });
+  };
+
+  const obtenerRecicladores = function () {
+    var ajx = $.ajax({
+      type: 'post',
+      url: waooserver + '/user/list_users_by_type',
+      dataType: 'json',
+      data: {type: 3}
+    });
+    ajx.done(function (resp) {
+      recicladores = JSON.parse(JSON.stringify(resp.users));
+    });
+  };
+
+  const generarSelectRecicladores = function () {
+    return recicladores.reduce(function (carry, reciclador) {
+      return carry + '<option value="' + reciclador.id + '">' + (reciclador.nombre + ' ' + reciclador.apellido) + '</option>'
+    }, '');
+  };
+
+  const asignarRuta = function (ev) {
+    ev.preventDefault();
+    const form = $(ev.target);
+    let ajx = $.ajax({
+      type: 'post',
+      url: waooserver + '/route/assign_route',
+      dataType: 'json',
+      data: form.serialize()
+    });
+    ajx.done(function (resp) {
+      if (resp.valid) {
+        location.reload();
+        return;
+      }
+      alert('No se pudo asignar');
+    });
+  };
+
+  const crearRuta = function (ev) {
+    ev.preventDefault();
+    const form = $(ev.target);
+    let ajx = $.ajax({
+      type: 'post',
+      url: waooserver + '/route/create_route',
+      dataType: 'json',
+      data: form.serialize()
+    });
+    ajx.done(function (resp) {
+      if (resp.valid) {
+        location.reload();
+        return;
+      }
+      alert('No se pudo asignar');
+    });
+  };
+
   return {
     init: init,
     listarUsuarios: listarUsuarios,
@@ -560,6 +688,9 @@ var waoo = (function () {
     rankCalificacion: rankCalificacion,
     soportesSinAprobar: soportesSinAprobar,
     listarMedidas: listarMedidas,
-    listarTiposCategoria: listarTiposCategoria
+    listarTiposCategoria: listarTiposCategoria,
+    listarSolicitudesSinAsignar: listarSolicitudesSinAsignar,
+    listarRutas: listarRutas,
+    obtenerRecicladores: obtenerRecicladores
   };
 })();
