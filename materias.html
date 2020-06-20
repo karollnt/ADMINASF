@@ -28,13 +28,11 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
     <div class="template-page-wrapper">
       <div class="navbar-collapse collapse templatemo-sidebar">
         <ul class="templatemo-sidebar-menu">
-          <li><a href="index.html"><i class="fa fa-home"></i>Inicio</a></li>
+          <li class="active"><a href="#"><i class="fa fa-home"></i>Inicio</a></li>
           <li><a href="reportes.html"><i class="fa fa-cubes"></i>Reportes</a></li>
           <li><a href="usuarios.html"><i class="fa fa-users"></i>Usuarios</a></li>
-          <li class="active"><a href="materias.html"><i class="fa fa-tasks"></i>Materiales</a></li>
-          <li><a href="bancos.html"><i class="fa fa-university"></i>Bancos</a></li>
-          <li><a href="trabajos.html"><i class="fa fa-tasks"></i>Trabajos</a></li>
-          <li><a href="recargas.html"><i class="fa fa-money"></i>Recargas</a></li>
+          <li><a href="materias.html"><i class="fa fa-tasks"></i>Materiales</a></li>
+          <li><a href="rutas.html"><i class="fa fa-tasks"></i>Rutas</a></li>
           <li><a href="preferences.html"><i class="fa fa-cog"></i>Configuracion</a></li>
           <li><a href="#" data-toggle="modal" data-target="#confirmModal"><i class="fa fa-sign-out"></i>Sign Out</a></li>
         </ul>
@@ -77,17 +75,10 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
                         <select name="id_tipo" id="tipo" class="form-control js-types-select"></select>
                       </div>
                     </div>
-                    <form class="js-edit-user-photo-form contactform editform display-none" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="user_id" value="0" class="js-edit-photo-user-id">
                     <div class="form_row">
-                      <label for="update_photo">Adjuntar archivo</label>
+                      <label for="update_photo">Imagen</label>
                       <input type="file" name="image" class="form_input required" id="update_photo">
                     </div>
-                  <div class="form_row form_row--button">
-                      <button class="btn" type="submit">Actualizar foto</button> 
-                    </div>
-                    <p class="js-update-photo-message"></p> 
-                  </form>
                     <div class="row">
                       <div class="col-md-6">
                         <input type="submit" class="btn btn-primary" value="Enviar">

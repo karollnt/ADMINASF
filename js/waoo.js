@@ -116,11 +116,14 @@ var waoo = (function () {
   function crearUsuario(e) {
     if(e) e.preventDefault();
     var $form = $(".js-crear-usuario");
-    var datos = $form.serialize();
+    var datos = new FormData($form[0]);
     var ajx = $.ajax({
-      type: 'post',
-      url: waooserver+'/usuarios/crearUsuario',
-      dataType: 'json',
+      url: waooserver + '/user/create_user',
+      method: 'POST',
+      async: false,
+      cache: false,
+      contentType: false,
+      processData: false,
       data: datos
     });
     ajx.done(function(resp) {
@@ -217,11 +220,14 @@ var waoo = (function () {
   function ingresarMateria(e) {
     if(e) e.preventDefault();
     var $form = $(".js-crear-materia");
-    var datos = $form.serialize();
+    var datos = new FormData($form[0]);
     var ajx = $.ajax({
-      type: 'post',
       url: waooserver+'/category/create_category',
-      dataType: 'json',
+      method: 'POST',
+      async: false,
+      cache: false,
+      contentType: false,
+      processData: false,
       data: datos
     });
     ajx.done(function(resp) {
