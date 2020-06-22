@@ -144,7 +144,7 @@ var waoo = (function () {
     var id = $(e.currentTarget).data('id');
     var ajx = $.ajax({
       type: 'post',
-      url: waooserver+'/usuarios/borrarUsuario',
+      url: waooserver + '/usuarios/borrarUsuario',
       dataType: 'json',
       data: {id:id}
     });
