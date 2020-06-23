@@ -249,7 +249,7 @@ var waoo = (function () {
     var id = $(e.currentTarget).data('id');
     var ajx = $.ajax({
       type: 'post',
-      url: waooserver+'/categoria/borrar_categoria',
+      url: waooserver+'/category/borrar_categoria',
       dataType: 'json',
       data: {id:id}
     });
