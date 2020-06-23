@@ -19,7 +19,7 @@ var waoo = (function () {
     $body.on('submit', '.js-assign-to', asignarRuta);
     $body.on('submit', '.js-crear-ruta', crearRuta);
     $body.on('click','.js-logout',logout);
-    $body.on('click','.js-borrar-materia',borrarMateria);
+    $body.on('click','.js-borrar-materia',borrar_categoria);
     $body.on('click','.js-borrar-banco',borrarBanco);
     $body.on('click','.js-borrar-usuario',borrarUsuario);
     $body.on('click','.js-asignar',reasignar);
@@ -244,12 +244,12 @@ var waoo = (function () {
     });
   }
 
-  function borrarMateria(e) {
+  function borrar_categoria(e) {
     if(e) e.preventDefault();
     var id = $(e.currentTarget).data('id');
     var ajx = $.ajax({
       type: 'post',
-      url: waooserver+'/materias/borrarMateria',
+      url: waooserver+'/categoria/borrar_categoria',
       dataType: 'json',
       data: {id:id}
     });
