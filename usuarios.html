@@ -83,6 +83,12 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
                         <input type="text" class="form-control" id="celular" name="telefono" value="">
                       </div>
                       <div class="col-md-6">
+                        <label for="direccion" class="control-label">Direccion</label>
+                        <input type="text" class="form-control" id="direccion" name="direccion" value="">
+                      </div>
+                    </div>
+                    <div class="row margin-bottom-15">
+                      <div class="col-md-6">
                         <label for="tipo" class="control-label">Tipo</label>
                         <select class="form-control" id="tipo" name="id_perfil">
                           <option value="1">Persona</option>
@@ -90,12 +96,6 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
                           <option value="3">Reciclador</option>
                           <option value="4">Admin</option>
                         </select>
-                      </div>
-                    </div>
-                    <div class="row margin-bottom-15">
-                      <div class="col-md-6">
-                        <label for="update_photo">Foto</label>
-                        <input type="file" name="image" class="form_input required" id="update_photo">
                       </div>
                       <div class="col-md-6">
                         <label for="placa" class="control-label">Placa</label>
@@ -120,6 +120,12 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
                         <input type="submit" class="btn btn-primary" value="Enviar">
                       </div>
                     </div>
+                    <div class="row margin-bottom-15">
+                      <div class="col-md-6">
+                        <label for="update_photo">Foto</label>
+                        <input type="file" name="image" class="form_input required" id="update_photo">
+                      </div>
+                    </div>
                   </form>
                 </div>
                 <div id="usuarios" class="tab-pane fade">
@@ -136,7 +142,10 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
                           <th>Username</th>
                           <th>Nombre</th>
                           <th>Email</th>
+                          <th>Direccion</th>
+                          <th>Telefono</th>
                           <th>Tipo</th>
+                          <th>Placa</th>
                           <th>Delete</th>
                         </tr>
                       </thead>
