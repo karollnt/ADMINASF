@@ -83,6 +83,9 @@ var waoo = (function () {
             +'<td>'+(v.nombre + ' ' + v.apellido)+'</td>'
             +'<td>'+v.correo+'</td>'
             +'<td>'+v.direccion+'</td>'
+            +'<td>' + v.telefono + '</td>'
+            +'<td>' + v.perfil + '</td>'
+            +'<td>' + v.placa + '</td>'
             +'<td><a href="#" class="btn btn-link js-borrar-usuario" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
           +'</tr>';
         });
@@ -643,7 +646,7 @@ var waoo = (function () {
 
   const generarSelectRecicladores = function () {
     return recicladores.reduce(function (carry, reciclador) {
-      return carry + '<option value="' + reciclador.id + '">' + (reciclador.nombre + ' ' + reciclador.apellido) + '</option>'
+      return carry + '<option value="' + reciclador.id + '">' + (reciclador.nombre + ' ' + reciclador.apellido) + ': ' + reciclador.placa + '</option>'
     }, '');
   };
 
