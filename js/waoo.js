@@ -25,6 +25,7 @@ var waoo = (function () {
     $body.on('click','.js-asignar',reasignar);
     $body.on('click','.js-aprobar-soporte',aprobarSoporte);
     $body.on('keyup','.js-filter-users',filtrarTabla);
+    $body.on('change', '.js-register-department', fillCitiesSelect)
   }
 
   function login(e) {
@@ -130,9 +131,13 @@ var waoo = (function () {
       data: datos
     });
     ajx.done(function(resp) {
-      alert(resp.msg);
-      $form[0].reset();
-      listarUsuarios();
+      if (resp.valid) {
+        alert('Usuario creado');
+        $form[0].reset();
+        listarUsuarios();
+        return;
+      }
+      alert('No se pudo crear el usuario');
     })
     .fail(function(e) {
       alert('Error: ' + e.message);
@@ -144,7 +149,7 @@ var waoo = (function () {
     var id = $(e.currentTarget).data('id');
     var ajx = $.ajax({
       type: 'post',
-      url: waooserver + '/usuarios/borrarUsuario',
+      url: waooserver + '/user/borrarUsuario',
       dataType: 'json',
       data: {id:id}
     });
@@ -677,6 +682,41 @@ var waoo = (function () {
     });
   };
 
+  const fillCitiesSelect = function (ev) {
+    const select = ev.target;
+    const targetSelector = select.getAttribute('data-target');
+    if (select.value == '') {
+      $(targetSelector).html('<option value="" selected>Ciudad</option>');
+    }
+    let request = $.ajax({
+      url: waooserver + '/department/get_department_cities',
+      method: 'GET',
+      data: {id: select.value}
+    });
+    request.done(function (data) {
+      const html = data.reduce(function (prev, current) {
+        return prev + '<option value="' + current.id + '">' + current.nombre + '</option>';
+      }, '<option value="">Ciudad</option>');
+      $(targetSelector).html(html);
+    })
+    .fail(function () {
+      $(targetSelector).html('<option value="" selected>Ciudad</option>');
+    });
+  };
+
+  const loadRegisterDepartments = function () {
+    let request = $.ajax({
+      url: waooserver + '/department/list_departments',
+      method: 'GET'
+    });
+    request.done(function (data) {
+      const html = data.reduce(function (prev, current) {
+        return prev + '<option value="' + current.id + '">' + current.nombre + '</option>';
+      }, '<option value="">Departamento</option>');
+      $('.js-register-department').html(html);
+    });
+  };
+
   return {
     init: init,
     listarUsuarios: listarUsuarios,
@@ -691,6 +731,7 @@ var waoo = (function () {
     listarTiposCategoria: listarTiposCategoria,
     listarSolicitudesSinAsignar: listarSolicitudesSinAsignar,
     listarRutas: listarRutas,
-    obtenerRecicladores: obtenerRecicladores
+    obtenerRecicladores: obtenerRecicladores,
+    loadRegisterDepartments: loadRegisterDepartments
   };
 })();

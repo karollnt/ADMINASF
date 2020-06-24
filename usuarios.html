@@ -56,32 +56,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
               <div class="tab-content">
                 <div id="crearusuario" class="tab-pane fade in active">
                   <h3 class="margin-bottom-15">Crear usuario</h3>
-                  <form class="js-crear-usuario" action="" method="post">
-                    <div class="row margin-bottom-15">
-                      <div class="col-md-6">
-                        <label for="nickname" class="control-label">Nickname</label>
-                        <input type="text" class="form-control" id="nickname" name="nickname" value="">
-                      </div>
-                      <div class="col-md-6">
-                        <label for="clave" class="control-label">Clave</label>
-                        <input type="password" class="form-control" id="clave" name="clave" value="">
-                      </div>
-                    </div>
-                    <div class="row margin-bottom-15">
-                      <div class="col-md-6">
-                        <label for="email" class="control-label">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" value="">
-                      </div>
-                      <div class="col-md-6">
-                        <label for="tipo" class="control-label">Tipo</label>
-                        <select class="form-control" id="tipo" name="tipo">
-                          <option value="1">Persona</option>
-                          <option value="2">Empresa</option>
-                          <option value="3">Reciclador</option>
-                          <option value="4">Admin</option>
-                        </select>
-                      </div>
-                    </div>
+                  <form class="js-crear-usuario" method="post" enctype="multipart/form-data">
                     <div class="row margin-bottom-15">
                       <div class="col-md-6">
                         <label for="nombre" class="control-label">Nombres</label>
@@ -94,19 +69,54 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
                     </div>
                     <div class="row margin-bottom-15">
                       <div class="col-md-6">
-                        <label for="celular" class="control-label">Celular</label>
-                        <input type="text" class="form-control" id="celular" name="celular" value="">
+                        <label for="email" class="control-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="clave" class="control-label">Clave</label>
+                        <input type="password" class="form-control" id="clave" name="clave" value="">
                       </div>
                     </div>
-                    <form class="js-edit-user-photo-form contactform editform display-none" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="user_id" value="0" class="js-edit-photo-user-id">
-                    <div class="form_row">
-                      <label for="update_photo">Foto</label>
-                      <input type="file" name="image" class="form_input required" id="update_photo">
-                    </div>
-                  </form>
-                    <div class="row">
+                    <div class="row margin-bottom-15">
                       <div class="col-md-6">
+                        <label for="celular" class="control-label">Celular</label>
+                        <input type="text" class="form-control" id="celular" name="telefono" value="">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="tipo" class="control-label">Tipo</label>
+                        <select class="form-control" id="tipo" name="id_perfil">
+                          <option value="1">Persona</option>
+                          <option value="2">Empresa</option>
+                          <option value="3">Reciclador</option>
+                          <option value="4">Admin</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row margin-bottom-15">
+                      <div class="col-md-6">
+                        <label for="update_photo">Foto</label>
+                        <input type="file" name="image" class="form_input required" id="update_photo">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="placa" class="control-label">Placa</label>
+                        <input type="text" class="form-control" id="placa" name="placa" value="">
+                      </div>
+                    </div>
+                    <div class="row margin-bottom-15">
+                      <div class="col-md-6">
+                        <select name="departamento" class="form-control js-register-department" data-target=".js-register-city" required>
+                          <option value="" selected>Departamento</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <select name="id_ciudad" class="form-control js-register-city" required>
+                          <option value="" selected>Ciudad</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row margin-bottom-15">
+                      <div class="col-md-6">
+                        <input type="hidden" name="id_tipo_identidad" value="1">
                         <input type="submit" class="btn btn-primary" value="Enviar">
                       </div>
                     </div>
@@ -172,6 +182,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
   <script>
     $('#tabs').tab();
     waoo.listarUsuarios();
+    waoo.loadRegisterDepartments();
   </script>
 </body>
 </html>
