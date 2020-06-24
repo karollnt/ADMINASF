@@ -571,7 +571,8 @@ var waoo = (function () {
           html += '<li>' +
             '<input type="checkbox" name="solicitudes[]" value="' + solicitud.id + '"> ' +
             '<label for="sol_' + solicitud.id + '">' + solicitud.direccion + '</label> - ' +
-            '<span>' + solicitud.ciudad + ', ' + solicitud.departamento + ' ( creado: ' + solicitud.fecha + ' )</span>' +
+            '<span>' + solicitud.ciudad + ', ' + solicitud.departamento + ' ( creado: ' + solicitud.fecha + ' )</span> ' +
+            '<span>- ' + solicitud.nombre_perfil + '</span>' +
           '</li>';
         });
       }
