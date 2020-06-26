@@ -618,6 +618,7 @@ var waoo = (function () {
               '<td>' + ruta.fecha_creacion + '</td>' +
               '<td>' + ruta.comentario + '</td>' +
               '<td>' + ruta.estado + '</td>' +
+              '<td>' + ruta.tipo + '</td>' +
               '<td>' + assignTo + '</td>' +
             '</tr>';
         });
