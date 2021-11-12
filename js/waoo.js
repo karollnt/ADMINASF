@@ -12,18 +12,22 @@ var waoo = (function () {
       if(location.pathname.split("/").slice(-1)[0] != 'sign-in.html')
         window.location.href = 'sign-in.html';
     }
-    $body.on('submit','.js-crear-usuario',crearUsuario);
-    $body.on('submit','.js-crear-materia',ingresarMateria);
-    $body.on('submit','.js-crear-banco',crearBanco);
-    $body.on('submit','.js-filtrar-aceptadas',filtrarAceptadas);
-    $body.on('submit', '.js-assign-to', asignarRuta);
-    $body.on('submit', '.js-crear-ruta', crearRuta);
-    $body.on('click','.js-logout',logout);
-    $body.on('click','.js-borrar-materia',borrarMateria);
-    $body.on('click','.js-borrar-banco',borrarBanco);
-    $body.on('click','.js-borrar-usuario',borrarUsuario);
-    $body.on('click','.js-asignar',reasignar);
-    $body.on('click','.js-aprobar-soporte',aprobarSoporte);
+    $body
+      .on('submit','.js-crear-usuario',crearUsuario)
+      .on('submit','.js-crear-materia',ingresarMateria)
+      .on('submit','.js-crear-banco',crearBanco)
+      .on('submit','.js-filtrar-aceptadas',filtrarAceptadas)
+      .on('submit', '.js-assign-to', asignarRuta)
+      .on('submit', '.js-create-brand', createBrand)
+      .on('submit', '.js-crear-ruta', crearRuta);
+    $body
+      .on('click','.js-logout',logout)
+      .on('click','.js-borrar-materia',borrarMateria)
+      .on('click','.js-borrar-banco',borrarBanco)
+      .on('click','.js-borrar-usuario',borrarUsuario)
+      .on('click','.js-delete-brand', deleteBrand)
+      .on('click','.js-asignar',reasignar)
+      .on('click','.js-aprobar-soporte',aprobarSoporte);
     $body.on('keyup','.js-filter-users',filtrarTabla);
     $body.on('change', '.js-register-department', fillCitiesSelect)
   }
@@ -736,6 +740,61 @@ var waoo = (function () {
     });
   };
 
+  const createBrand = function (e) {
+    if(e) e.preventDefault();
+    const $form = $('.js-create-brand');
+    const datos = $form.serialize();
+    const ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/category/create_brand',
+      dataType: 'json',
+      data: datos
+    });
+    ajx.done(function(resp) {
+      $form[0].reset();
+      loadBrandsList();
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  };
+
+  const loadBrandsList = function () {
+    let request = $.ajax({
+      url: waooserver + '/category/get_brands',
+      method: 'GET'
+    });
+    request.done(function (data) {
+      const html = data.reduce(function (prev, current) {
+        return prev +
+          '<tr>' +
+            '<td>' + current.id + '</td>' +
+            '<td>' + current.nombre + '</td>' +
+            '<td><a href="#" class="btn btn-link js-delete-brand" data-id="' + current.id + '"><span class="fa fa-trash-o"></span></a></td>' +
+          '</tr>';
+      }, '');
+      $('.js-brand-list').html(html);
+    });
+  };
+
+  const deleteBrand = function (e) {
+    if(e) e.preventDefault();
+    const id = $(e.currentTarget).data('id');
+    const ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/category/delete_brand',
+      dataType: 'json',
+      data: {id:id}
+    });
+    ajx.done(function(resp) {
+      alert(resp.msg);
+      loadBrandsList();
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  };
+
   return {
     init: init,
     listarUsuarios: listarUsuarios,
@@ -752,6 +811,8 @@ var waoo = (function () {
     listarRutas: listarRutas,
     obtenerRecicladores: obtenerRecicladores,
     loadRegisterDepartments: loadRegisterDepartments,
-    loadBrands: loadBrands
+    loadBrands: loadBrands,
+    loadBrandsList: loadBrandsList,
+    deleteBrand: deleteBrand
   };
 })();
