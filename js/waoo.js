@@ -19,6 +19,7 @@ var waoo = (function () {
       .on('submit','.js-filtrar-aceptadas',filtrarAceptadas)
       .on('submit', '.js-assign-to', asignarRuta)
       .on('submit', '.js-create-brand', createBrand)
+      .on('submit', '.js-create-measurement', createMeasurement)
       .on('submit', '.js-crear-ruta', crearRuta);
     $body
       .on('click','.js-logout',logout)
@@ -26,6 +27,7 @@ var waoo = (function () {
       .on('click','.js-borrar-banco',borrarBanco)
       .on('click','.js-borrar-usuario',borrarUsuario)
       .on('click','.js-delete-brand', deleteBrand)
+      .on('click','.js-delete-measurement', deleteMeasurement)
       .on('click','.js-asignar',reasignar)
       .on('click','.js-aprobar-soporte',aprobarSoporte);
     $body.on('keyup','.js-filter-users',filtrarTabla);
@@ -795,6 +797,61 @@ var waoo = (function () {
     });
   };
 
+  const createMeasurement = function (e) {
+    if(e) e.preventDefault();
+    const $form = $('.js-create-measurement');
+    const datos = $form.serialize();
+    const ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/category/create_measurement',
+      dataType: 'json',
+      data: datos
+    });
+    ajx.done(function(resp) {
+      $form[0].reset();
+      loadMeasurementsList();
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  };
+
+  const loadMeasurementsList = function () {
+    let request = $.ajax({
+      url: waooserver + '/category/get_measurements',
+      method: 'GET'
+    });
+    request.done(function (data) {
+      const html = data.reduce(function (prev, current) {
+        return prev +
+          '<tr>' +
+            '<td>' + current.id + '</td>' +
+            '<td>' + current.nombre + '</td>' +
+            '<td><a href="#" class="btn btn-link js-delete-measurement" data-id="' + current.id + '"><span class="fa fa-trash-o"></span></a></td>' +
+          '</tr>';
+      }, '');
+      $('.js-measurement-list').html(html);
+    });
+  };
+
+  const deleteMeasurement = function (e) {
+    if(e) e.preventDefault();
+    const id = $(e.currentTarget).data('id');
+    const ajx = $.ajax({
+      type: 'post',
+      url: waooserver+'/category/delete_measurement',
+      dataType: 'json',
+      data: {id:id}
+    });
+    ajx.done(function(resp) {
+      alert(resp.msg);
+      loadMeasurementsList();
+    })
+    .fail(function(e) {
+      alert('Error: ' + e.message);
+    });
+  };
+
   return {
     init: init,
     listarUsuarios: listarUsuarios,
@@ -813,6 +870,8 @@ var waoo = (function () {
     loadRegisterDepartments: loadRegisterDepartments,
     loadBrands: loadBrands,
     loadBrandsList: loadBrandsList,
-    deleteBrand: deleteBrand
+    deleteBrand: deleteBrand,
+    loadMeasurementsList: loadMeasurementsList,
+    deleteMeasurement: deleteMeasurement
   };
 })();
