@@ -214,6 +214,7 @@ var waoo = (function () {
             + '<td>' + v.precio + '</td>'
             + '<td>' + v.medida + '</td>'
             + '<td>' + v.tipo + '</td>'
+            + '<td>' + v.nombre_marca + '</td>'
             +'<td><a href="#" class="btn btn-link js-borrar-materia" data-id="'+v.id+'"><span class="fa fa-trash-o"></span></a></td>'
           +'</tr>';
         });
@@ -722,6 +723,19 @@ var waoo = (function () {
     });
   };
 
+  const loadBrands = function () {
+    let request = $.ajax({
+      url: waooserver + '/category/get_brands',
+      method: 'GET'
+    });
+    request.done(function (data) {
+      const html = data.reduce(function (prev, current) {
+        return prev + '<option value="' + current.id + '">' + current.nombre + '</option>';
+      }, '<option value="">Marca</option>');
+      $('.js-brand-select').html(html);
+    });
+  };
+
   return {
     init: init,
     listarUsuarios: listarUsuarios,
@@ -737,6 +751,7 @@ var waoo = (function () {
     listarSolicitudesSinAsignar: listarSolicitudesSinAsignar,
     listarRutas: listarRutas,
     obtenerRecicladores: obtenerRecicladores,
-    loadRegisterDepartments: loadRegisterDepartments
+    loadRegisterDepartments: loadRegisterDepartments,
+    loadBrands: loadBrands
   };
 })();
