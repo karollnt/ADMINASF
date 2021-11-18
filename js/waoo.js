@@ -29,7 +29,8 @@ var waoo = (function () {
       .on('click','.js-delete-brand', deleteBrand)
       .on('click','.js-delete-measurement', deleteMeasurement)
       .on('click','.js-asignar',reasignar)
-      .on('click','.js-aprobar-soporte',aprobarSoporte);
+      .on('click','.js-aprobar-soporte',aprobarSoporte)
+      .on('click','.js-view-order-detail', viewOrderDetail);
     $body.on('keyup','.js-filter-users',filtrarTabla);
     $body.on('change', '.js-register-department', fillCitiesSelect)
   }
@@ -852,6 +853,97 @@ var waoo = (function () {
     });
   };
 
+  const loadGeneralReport = function () {
+    let request = $.ajax({
+      url: waooserver + '/order/get_orders',
+      method: 'GET'
+    });
+    request.done(function (data) {
+      const html = data.reduce(function (prev, current, currentIndex) {
+        return prev +
+          '<tr>' +
+            '<td>' + (currentIndex + 1) + '</td>' +
+            '<td>' + current.fecha + '</td>' +
+            '<td>' + current.nombre_cliente + ' ' + current.apellido_cliente + '</td>' +
+            '<td>' + current.nombre_recicla_tendero + ' ' + current.apellido_recicla_tendero + '</td>' +
+            '<td>' + current.estado + '</td>' +
+            '<td><a href="#" data-toggle="modal" data-target="#detail-modal" class="btn btn-link js-view-order-detail" data-id="' + current.id + '">Ver</a></td>' +
+          '</tr>';
+      }, '');
+      $('.js-orders-list').html(html);
+    });
+  };
+
+  const viewOrderDetail = function (ev) {
+    const orderId = ev.target.dataset.id;
+    viewOrderData(orderId);
+    viewOrderProducts(orderId);
+  };
+
+  const viewOrderData = function (orderId) {
+    let request = $.ajax({
+      url: waooserver + '/order/get_order_data',
+      method: 'GET',
+      data: {
+        order_id: orderId
+      }
+    });
+
+    request.done(function (data) {
+      const nombre_recicla_tendero = data.nombre_recicla_tendero == null 
+        ? 'No asignado' : data.nombre_recicla_tendero + ' ' + data.apellido_recicla_tendero;
+      const html = '<div class="col-md-6">' +
+          '<p><b>Fecha de Asistencia</b><br>' + data.fecha + '</p>' +
+        '</div>' +
+        '<div class="col-md-6">' +
+          '<p><b>Fecha de Asistido</b><br>' + (data.fecha_recogida ? data.fecha_recogida : 'No Asistido') + '</p>' +
+        '</div>' +
+        '<div class="col-md-12">' +
+          '<p><b>Nombre cliente</b>: ' + (data.nombre_cliente + ' ' + data.apellido_cliente) + '</p>' +
+          '<p><b>Tel&eacute;fono</b>: ' + data.telefono + '</p>' +
+        '</div>' +
+        '<div class="col-md-6">' +
+          '<p><b>Departamento</b>: ' + data.departamento + '</p>' +
+          '<p><b>Ciudad</b>: ' + data.ciudad + '</p>' +
+          '<p><b>Direcci&oacute;n</b>: ' + data.direccion + '</p>' +
+          '<p><b>Comentario</b>: ' + data.comentario + '</p>' +
+        '</div>' +
+        '<div class="col-md-6">' +
+          '<p><b>Mecanico</b>:</p>' +
+          '<p><b>' + nombre_recicla_tendero + '</b></p>' +
+          '<p>Tel&eacute;fono: ' + data.telefono_empleado + '</p>' +
+        '</div>';
+      $('.js-order-detail').html(html);
+    });
+  };
+
+  const viewOrderProducts = function (orderId) {
+    let request = $.ajax({
+      url: waooserver + '/order/get_order_details',
+      method: 'GET',
+      data: {
+        order_id: orderId
+      }
+    });
+
+    request.done(function (data) {
+      let total = 0;
+      const html = data.reduce(function (carry, item) {
+        const lineItemPrice = item.precio * item.cantidad;
+        total += lineItemPrice;
+        const detailHtml = '<tr>' +
+          '<td>' + item.nombre_categoria + ' (' + item.nombre_marca + ')<br>' + item.medida + '</td>' +
+          '<td>' + item.cantidad + '</td>' +
+          '<td>$ ' + lineItemPrice + '</td>' +
+        '</tr>';
+
+        return carry + detailHtml;
+      }, '');
+      $('.js-order-items').html(html);
+      $('.js-total-price').html(total);
+    });
+  };
+
   return {
     init: init,
     listarUsuarios: listarUsuarios,
@@ -872,6 +964,7 @@ var waoo = (function () {
     loadBrandsList: loadBrandsList,
     deleteBrand: deleteBrand,
     loadMeasurementsList: loadMeasurementsList,
-    deleteMeasurement: deleteMeasurement
+    deleteMeasurement: deleteMeasurement,
+    loadGeneralReport: loadGeneralReport
   };
 })();
