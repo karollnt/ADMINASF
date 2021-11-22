@@ -30,12 +30,12 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
       <div class="navbar-collapse collapse templatemo-sidebar">
         <ul class="templatemo-sidebar-menu">
           <li><a href="index.html"><i class="fa fa-home"></i>Inicio</a></li>
-          <li class="active"><a href="reportes.html"><i class="fa fa-cubes"></i>Reportes</a></li>
+          <li class="active"><a href="#"><i class="fa fa-cubes"></i>Reportes</a></li>
           <li><a href="usuarios.html"><i class="fa fa-users"></i>Usuarios</a></li>
-          <li><a href="materias.html"><i class="fa fa-tasks"></i>Materias</a></li>
-          <li><a href="bancos.html"><i class="fa fa-university"></i>Bancos</a></li>
-          <li><a href="trabajos.html"><i class="fa fa-tasks"></i>Trabajos</a></li>
-          <li><a href="recargas.html"><i class="fa fa-money"></i>Recargas</a></li>
+          <li><a href="materias.html"><i class="fa fa-tasks"></i>Materiales</a></li>
+          <li><a href="marcas.html"><i class="fa fa-tasks"></i>Marcas</a></li>
+          <li><a href="medidas.html"><i class="fa fa-tasks"></i>Medidas</a></li>
+          <li><a href="rutas.html"><i class="fa fa-tasks"></i>Rutas</a></li>
           <li><a href="preferences.html"><i class="fa fa-cog"></i>Configuracion</a></li>
           <li><a href="#" data-toggle="modal" data-target="#confirmModal"><i class="fa fa-sign-out"></i>Sign Out</a></li>
         </ul>
@@ -53,22 +53,25 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
           <div class="row">
             <div class="col-md-12">
               <ul id="tabs" class="nav nav-tabs">
-                <li class="active"><a href="#rank" data-toggle="tab">Calificaciones asistentes</a></li>
+                <li class="active"><a href="#rank" data-toggle="tab">Solicitudes</a></li>
                 <!-- <li><a href="#usuarios" data-toggle="tab">Listado</a></li> -->
               </ul>
               <div class="tab-content">
                 <div id="rank" class="tab-pane fade in active">
-                  <h3 class="margin-bottom-15">Mejores calificados</h3>
+                  <h3 class="margin-bottom-15">Solicitudes</h3>
                   <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered js-ranking-calificacion">
+                    <table class="table table-striped table-hover table-bordered">
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Username</th>
-                          <th>Calificaci&oacute;n</th>
+                          <th>Fecha</th>
+                          <th>Cliente</th>
+                          <th>Mecanico</th>
+                          <th>Estado</th>
+                          <th>Detalle</th>
                         </tr>
                       </thead>
-                      <tbody></tbody>
+                      <tbody class="js-orders-list"></tbody>
                     </table>
                   </div>
                 </div>
@@ -94,6 +97,31 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
         </div>
       </div>
 
+      <div class="modal fade" id="detail-modal" tabindex="-1" role="dialog" aria-labelledby="detail-title" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="detail-title">Detalle solicitud</h4>
+              <div class="row js-order-detail">Cargando ...</div>
+              <p><b>Asistencia de la solicitud:</b></p>
+              <table class="table table-striped table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th>Producto/servicio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody class="js-order-items"></tbody>
+              </table>
+              <p class="order-total"><b>Total:</b> $<span class="js-total-price"></span></p>
+            </div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+
       <footer class="templatemo-footer">
         <div class="templatemo-copyright">
           <p>Copyright &copy; 2016 Waoo</p>
@@ -109,7 +137,7 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
   <script src="js/stars.js"></script>
   <script>
     $('#tabs').tab();
-    waoo.rankCalificacion();
+    waoo.loadGeneralReport();
   </script>
 </body>
 </html>
